@@ -1,0 +1,50 @@
+.boxes-container {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    margin: 0 auto 0;
+    justify-content: center;
+    height: 100vh;
+}
+  
+.boxes-container header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.boxes-container header h1 {
+    font: inherit;
+    font-size: 21px;
+    padding-left: 15px;
+    margin-left: 15px;
+    border-left: 1px solid #ddd;
+}
+
+.boxes-container ul {
+    list-style-type: none;
+    border: 1px solid #ddd;
+    border-radius: 4px; 
+    
+    min-width: 80%;
+    margin: 0 auto;
+}
+
+.boxes-container ul li {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.boxes-container ul li:hover {
+    background: #eee;
+}
+
+.boxes-container ul li span {
+    margin: 5px;
+}
+
+.boxes-container ul li strong {
+    color: #029;
+}
