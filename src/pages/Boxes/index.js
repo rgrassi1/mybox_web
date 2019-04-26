@@ -43,7 +43,7 @@ const Boxes = props => {
                 <img src={load} alt=""/>
             }
             { !loading &&
-                <ul>{ boxes.length > 0 && boxes.map(box => renderBox(box)) }</ul>
+                <ul>{ boxes.length > 0 ? boxes.map(box => renderBox(box)) : <li>Nehum box encontrado!</li> }</ul>
             }
         </div>
     )
