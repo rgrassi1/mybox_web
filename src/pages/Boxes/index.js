@@ -27,7 +27,7 @@ const Boxes = props => {
         return (
             <li key={box._id}>
                 <span><strong><Link to={`/boxes/${box._id}`}>{box.title}</Link></strong></span>
-                <span style={{ minWidth: 200 }}>{box.email}</span>
+                <span>{box.email}</span>
                 <span>{dataFmt}</span>
             </li>
         )
@@ -42,6 +42,9 @@ const Boxes = props => {
             { loading &&
                 <img src={load} alt=""/>
             }
+            <div className='new-box'>
+                <Link to="/"><strong>Criar novo box >></strong></Link>
+            </div>
             { !loading &&
                 <ul>{ boxes.length > 0 ? boxes.map(box => renderBox(box)) : <li>Nehum box encontrado!</li> }</ul>
             }

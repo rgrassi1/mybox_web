@@ -1,8 +1,8 @@
 .boxes-container {
     display: flex;
     flex-direction: column;
-    width: 900px;
-    margin: 0 auto 0;
+    max-width: 900px;
+    margin: 0 auto;
     justify-content: center;
     height: 100vh;
 }
@@ -26,12 +26,12 @@
     list-style-type: none;
     border: 1px solid #ddd;
     border-radius: 4px; 
-    
-    min-width: 80%;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
 }
 
 .boxes-container ul li {
+    width: 100%;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -47,4 +47,23 @@
 
 .boxes-container ul li strong {
     color: #029;
+}
+
+.new-box {
+    margin: 10px 0 20px 10px;    
+}
+
+@media(max-width: 768px) {
+    .boxes-container header {
+        flex-direction: column;
+    }   
+    
+    .boxes-container header h1 {
+        padding-left: 0;
+        margin-left: 0;    
+    }
+
+    .boxes-container img {
+        margin-bottom: 20px;
+    }    
 }
