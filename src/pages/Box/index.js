@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Component } from 'react';
 import socket from 'socket.io-client';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import remove from '../../assets/delete.svg';
-import load from '../../assets/loading.svg'
+import load from '../../assets/loading.svg';
 import Dropzone from 'react-dropzone';
 import { MdInsertDriveFile } from 'react-icons/md';
 import { distanceInWords } from 'date-fns';
@@ -18,7 +17,7 @@ class Box extends Component {
         this.state = {
             box: { files: [] },
             loading: false,
-            uploading: false,
+            uploadFiles: [],
             deleting: false
         }    
         this.io = socket('http://localhost:3333', { query: { match: 1 } });  
@@ -29,7 +28,7 @@ class Box extends Component {
         this.fetchBox();
     }
 
-    subscribeFiles = ()  => {
+    subscribeFiles = () => {
         this.io.on('new-file', payload => {
             const boxNew = { ...this.state.box, files: [ payload, ...this.state.box.files ] }
             this.setState({ box: boxNew });
@@ -62,22 +61,28 @@ class Box extends Component {
         this.setState({ deleting: false })
     }
 
-    handleUpload = files => {
-        files.forEach(async (file) => {
-            const formData = new FormData();
-            formData.append('file', file);
+    handleUpload = async files => {
+        this.setState({ uploadFiles: files })
 
-            this.setState({ uploading: true })
+        await new Promise(resolve => {
+            files.forEach(async (file, index, files) => {   
+                const formData = new FormData();
+                formData.append('file', file);
 
-            const { id } = this.props.match.params;
-            await api.post(`/boxes/${id}/files`, formData);
+                const { id } = this.props.match.params;
+                await api.post(`/boxes/${id}/files`, formData);
 
-            this.setState({ uploading: false })
-        });
+                if (index === files.length - 1) {
+                    resolve()
+                }
+            })
+        })
+
+        this.setState({ uploadFiles: [] })        
     }
 
-    render() {    
-        const { box, loading, uploading } = this.state;
+    render() {         
+        const { box, loading, uploadFiles } = this.state;
 
         return (
             <div className='box-container'>
@@ -102,11 +107,14 @@ class Box extends Component {
                             )}
                         </Dropzone>
                         <ul>
-                            { uploading &&
-                                <li>
-                                    <img src={load} alt="Carregando..."/>
-                                </li>
-                            }    
+                            { uploadFiles.length > 0 && uploadFiles.map(file => (
+                                    <li style={{ justifyContent: 'space-between' }} key={file.lastModified}>
+                                        <span>{file.name}</span>
+                                        {<img src={load} alt="uploading file..."/>}
+                                    </li> 
+                                ))
+                            }
+                                
                             { box.files && box.files.map(file => (
                                 <li key={file._id}>
                                     <a style={{ flex: 2 }} href={file.url}>
