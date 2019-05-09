@@ -1,0 +1,61 @@
+.file-general-container + li {
+    padding-top: 20px;
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.file-general-container a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;    
+}
+
+.file-general-container a strong {
+    font-weight: normal;
+    font-size: 14px;
+    margin-left: 10px;
+    color: #333;
+}
+  
+.file-general-container span {
+    color: #999;
+    font-size: 13px;
+}
+
+.file-general-container img {
+    max-width: 25px;
+    cursor: pointer;
+}
+
+.file-upload-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-upload-container a {
+    color: '#1C4494';    
+}
+
+.file-container {
+    display: flex;
+    align-items: center;
+}
+
+.file-container-item:nth-of-type(1) {
+    flex: 2
+}
+
+.file-container-item:nth-of-type(2) {
+    flex: 1
+}
+
+.file-container-item:nth-of-type(3) {
+    flex-basis: 25px
+}
+
+.file-delete-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

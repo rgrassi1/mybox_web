@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import socket from 'socket.io-client';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
-import remove from '../../assets/delete.svg';
 import load from '../../assets/loading.svg';
+import File from '../File';
 import Dropzone from 'react-dropzone';
-import { MdInsertDriveFile } from 'react-icons/md';
-import { distanceInWords } from 'date-fns';
 import './styles.css';
-import pt from 'date-fns/locale/pt';
 
 class Box extends Component {
 
@@ -17,8 +14,6 @@ class Box extends Component {
         this.state = {
             box: { files: [] },
             loading: false,
-            uploadFiles: [],
-            deleting: false
         }    
         this.io = socket('http://localhost:3333', { query: { match: 1 } });  
     }
@@ -52,52 +47,59 @@ class Box extends Component {
     }
 
     handleRemove = async file => {
-        const { box } = this.state;
-        this.idDeleting = file._id;
-        this.setState({ deleting: true })
+        const foundFile = this.state.box.files.find(f => f._id === file._id)
+        const fileDelete = { ...foundFile, deleting: true }
 
-        await api.delete(`/boxes/${box._id}/files/${file._id}`) 
+        const newFiles = this.state.box.files;
 
-        this.setState({ deleting: false })
+        const idx = this.state.box.files.indexOf(foundFile);
+        newFiles[idx] = fileDelete;
+
+        this.setState({ box: { ...this.state.box, files: newFiles } })
+
+        await api.delete(`/boxes/${this.state.box._id}/files/${file._id}`) 
+
+        this.setState({ box: { ...this.state.box, files: this.state.box.files.filter(file => file._id !== fileDelete._id) } })
     }
 
     handleUpload = async files => {
-        this.setState({ uploadFiles: files })
+        const { id } = this.props.match.params;
 
-        await new Promise(resolve => {
-            files.forEach(async (file, index, files) => {   
-                const formData = new FormData();
-                formData.append('file', file);
+        for (const file of files) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            const fileUpload = { _id: file.lastModified, title: file.name, uploading: true };
 
-                const { id } = this.props.match.params;
-                await api.post(`/boxes/${id}/files`, formData);
+            const newFiles = this.state.box.files;
+            newFiles.unshift(fileUpload);
 
-                if (index === files.length - 1) {
-                    resolve()
-                }
-            })
-        })
+            this.setState({ box: { ...this.state.box, files: newFiles} });
 
-        this.setState({ uploadFiles: [] })        
+            await api.post(`/boxes/${id}/files`, formData);
+
+            this.setState({ box: { ...this.state.box, files: this.state.box.files.filter(file => file._id !== fileUpload._id)} });
+        }
     }
 
     render() {         
-        const { box, loading, uploadFiles } = this.state;
-
+        const { box, loading } = this.state;
         return (
             <div className='box-container'>
-                <header>
+                <header className='box-container-header'>
                     <img src={logo} alt="" />
                     <h1>{box.title}</h1>
-                </header>   
-                <span>{box.email}</span>
+                </header> 
+                <section className='box-container-user'>  
+                    <span className='box-container-user-email'>{box.email}</span>
+                </section>
                 { loading &&
-                    <div className='img-container'>
+                    <section className='box-container-load'>
                         <img src={load} alt="Carregando..."/>
-                    </div>
+                    </section>
                 }
                 { !loading &&            
-                    <div>
+                    <section className='box-container-files'>
                         <Dropzone onDropAccepted={this.handleUpload}>
                             {({ getRootProps, getInputProps }) => (
                                 <div className="upload" {...getRootProps()}>
@@ -106,38 +108,10 @@ class Box extends Component {
                                 </div>
                             )}
                         </Dropzone>
-                        <ul>
-                            { uploadFiles.length > 0 && uploadFiles.map(file => (
-                                    <li style={{ justifyContent: 'space-between' }} key={file.lastModified}>
-                                        <span>{file.name}</span>
-                                        {<img src={load} alt="uploading file..."/>}
-                                    </li> 
-                                ))
-                            }
-                                
-                            { box.files && box.files.map(file => (
-                                <li key={file._id}>
-                                    <a style={{ flex: 2 }} href={file.url}>
-                                        <MdInsertDriveFile size={22} color="#A5CFFF" />
-                                        <strong>{file.title}</strong>
-                                    </a>            
-                                    <span style={{ flex: 1 }}>
-                                        Há {distanceInWords(file.createdAt, new Date(), { locale: pt })}
-                                    </span>
-                                    { !this.state.deleting &&
-                                        <img onClick={() => this.handleRemove(file)} src={remove} alt="Excluir"/>
-                                    }
-                                    { this.state.deleting && this.idDeleting === file._id &&
-                                        <img src={load} alt="Removendo..."/>
-                                    }
-                                    { this.state.deleting && this.idDeleting !== file._id &&
-                                        <img onClick={() => this.handleRemove(file)} src={remove} alt="Excluir"/>
-                                    }
-
-                                </li>
-                            ))}
+                        <ul>                                
+                            { box.files && box.files.map(file => <File key={file._id} handleRemove={this.handleRemove} file={file} /> )}                            
                         </ul>        
-                    </div>
+                    </section>
                 }
             </div>
         )
