@@ -18,21 +18,23 @@ const File = props => {
 
             { !file.uploading && !file.deleting &&
                 <div className='file-container'>
-                    <a className='file-container-item' href={file.url}>
+                    <a className='file-container-item' style={{ flex: 2 }} href={file.url}>
                         <MdInsertDriveFile size={22} color="#A5CFFF" />
                         <strong>{file.title}</strong>
                     </a>            
-                    <span className='file-container-item'>
+                    <span className='file-container-item' style={{ flex: 1 }}>
                         Há {distanceInWords(file.createdAt, new Date(), { locale: pt })}
                     </span>
-                    <img className='file-container-item' onClick={() => props.handleRemove(file)} src={remove} alt="Excluir"/>                        
+                    <button className='file-container-item'>
+                        <img onClick={() => props.handleRemove(file)} src={remove} alt="Excluir"/>                        
+                    </button>
                 </div>
             }
 
             { file.deleting &&
                 <div className='file-delete-container'>
                     <span>{file.title}</span>
-                    <strong style={{ color: '#E36B24' }}>deleting...</strong>
+                    <strong>deleting...</strong>
                 </div>
             }
         </li>

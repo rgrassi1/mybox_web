@@ -32,7 +32,6 @@ const Main = props => {
                     </form>
                 </div>
 
-            { /*created && <Redirect to={`/box/${box._id}`} /> */}
             { created && <Redirect to='/boxes' /> }
             { !created &&
                 <div className="container">
