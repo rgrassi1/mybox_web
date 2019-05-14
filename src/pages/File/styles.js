@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const BoxFileContainer = styled.div`
     cursor: pointer;
     box-shadow: inset 0 -1px 0 0 rgba(100,121,143,0.122);
     :hover {
@@ -10,7 +10,7 @@ export const Container = styled.div`
         0 1px 3px 1px rgba(60, 64, 67, .15);
     }
 `
-export const UploadContainer = styled.div`
+export const UploadingContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -20,11 +20,10 @@ export const UploadContainer = styled.div`
         font-size: 13px;
     }
 `
-
 export const FileContainer = styled.div`
     padding: 6px;
 `
-export const ElementsContainer = styled.div`
+export const ElementsFileContainer = styled.div`
     display: inline-block;
     width: 95%;
     vertical-align: middle;
@@ -48,7 +47,7 @@ export const ElementsContainer = styled.div`
         font-size: 13px;
     }
 `
-export const ActionsContainer = styled.div`
+export const ActionsFileContainer = styled.div`
     float: right;
     button {
         width: 28px;
@@ -63,7 +62,7 @@ export const ActionsContainer = styled.div`
         }
     }
 `
-export const DeleteContainer = styled.div`
+export const DeletingContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;

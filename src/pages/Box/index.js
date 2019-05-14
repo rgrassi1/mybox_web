@@ -5,7 +5,14 @@ import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
 import File from '../File';
 import Dropzone from 'react-dropzone';
-import './styles.css';
+import { 
+    BoxContainer,
+    BoxHeaderContainer,
+    BoxUserContainer,
+    BoxLoadContainer,
+    BoxUploadContainer,
+    BoxFilesContainer
+} from './styles'
 
 class Box extends Component {
 
@@ -82,38 +89,47 @@ class Box extends Component {
         }
     }
 
+    renderFile = file => {
+        return ( 
+            <File 
+                key={file._id} 
+                handleRemove={this.handleRemove} 
+                file={file}
+            />
+        )   
+    } 
+
     render() {         
         const { box, loading } = this.state;
         return (
-            <div className='box-container'>
-                <header className='box-container-header'>
+            <BoxContainer>
+                <BoxHeaderContainer>
                     <img src={logo} alt="" />
                     <h1>{box.title}</h1>
-                </header> 
-                <section className='box-container-user'>  
-                    <span className='box-container-user-email'>{box.email}</span>
-                </section>
+                </BoxHeaderContainer> 
+                <BoxUserContainer>  
+                    <span>{box.email}</span>
+                </BoxUserContainer>
+                <Dropzone onDropAccepted={this.handleUpload}>
+                    {({ getRootProps, getInputProps }) => (
+                        <BoxUploadContainer {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            <p>Arraste arquivos ou clique aqui</p>
+                        </BoxUploadContainer>
+                    )}
+                </Dropzone>
+
                 { loading &&
-                    <section className='box-container-load'>
+                    <BoxLoadContainer>
                         <img src={load} alt="Carregando..."/>
-                    </section>
+                    </BoxLoadContainer>
                 }
                 { !loading &&            
-                    <section className='box-container-files'>
-                        <Dropzone onDropAccepted={this.handleUpload}>
-                            {({ getRootProps, getInputProps }) => (
-                                <div className="upload" {...getRootProps()}>
-                                    <input {...getInputProps()} />
-                                    <p>Arraste arquivos ou clique aqui</p>
-                                </div>
-                            )}
-                        </Dropzone>
-                        <ul>                                
-                            { box.files && box.files.map(file => <File key={file._id} handleRemove={this.handleRemove} file={file} /> )}                            
-                        </ul>        
-                    </section>
+                    <BoxFilesContainer>                                
+                        { box.files && box.files.map(file => this.renderFile(file)) }                            
+                    </BoxFilesContainer>        
                 }
-            </div>
+            </BoxContainer>
         )
     }
 }

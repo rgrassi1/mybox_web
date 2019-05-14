@@ -4,12 +4,12 @@ import { distanceInWords } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import remove from '../../assets/delete.svg';
 import { 
-    Container,
-    UploadContainer,
+    BoxFileContainer,
+    UploadingContainer,
     FileContainer,
-    ElementsContainer,
-    ActionsContainer,
-    DeleteContainer
+    ElementsFileContainer,
+    ActionsFileContainer,
+    DeletingContainer
 } from './styles'
 
 const File = props => {
@@ -26,17 +26,17 @@ const File = props => {
     const { file } = props
     return (
         <li>
-            <Container onMouseLeave={onMouseLeave} onMouseOver={onMouseHover}>
+            <BoxFileContainer onMouseLeave={onMouseLeave} onMouseOver={onMouseHover}>
                 { file.uploading &&
-                    <UploadContainer>
+                    <UploadingContainer>
                         <span>{file.title}</span>
                         <strong>uploading...</strong>
-                    </UploadContainer>
+                    </UploadingContainer>
                 }
 
                 { !file.uploading && !file.deleting &&
                     <FileContainer>
-                        <ElementsContainer>
+                        <ElementsFileContainer>
                             <a href={file.url}>
                                 <MdInsertDriveFile size={22} color="#A5CFFF" />
                                 <strong>{file.title}</strong>
@@ -44,24 +44,24 @@ const File = props => {
                             <span>
                                 Há {distanceInWords(file.createdAt, new Date(), { locale: pt })}
                             </span>
-                        </ElementsContainer>
+                        </ElementsFileContainer>
                         { actions &&
-                            <ActionsContainer>
+                            <ActionsFileContainer>
                                 <button onClick={() => props.handleRemove(file)}>
                                     <img src={remove} alt="Excluir"/>                        
                                 </button>                                
-                            </ActionsContainer>
+                            </ActionsFileContainer>
                         }
                     </FileContainer>
                 }
 
                 { file.deleting &&
-                    <DeleteContainer>
+                    <DeletingContainer>
                         <span>{file.title}</span>
                         <strong>deleting...</strong>
-                    </DeleteContainer>
+                    </DeletingContainer>
                 }
-            </Container>
+            </BoxFileContainer>
         </li>
     )
 }

@@ -16,7 +16,6 @@ const Main = props => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-
         const response = await api.post('/boxes', box);
         setBox({ ...box, id: response.data._id });
         setCreated(true);
