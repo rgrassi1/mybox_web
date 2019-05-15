@@ -48,7 +48,7 @@ export const BoxesBoxContainer = styled.li`
 export const BoxesBoxElementContainer = styled.span`
     margin: 5px;
 
-    strong { color: #039 }
+    strong { color: #7159c1 }
     a { text-decoration: none }
     
     &:nth-of-type(1) {

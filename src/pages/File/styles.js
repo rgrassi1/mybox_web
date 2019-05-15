@@ -16,7 +16,7 @@ export const UploadingContainer = styled.div`
     justify-content: space-between;
     padding: 6px;
     span {
-        color: #999;
+        color: #7159c1;
         font-size: 13px;
     }
 `

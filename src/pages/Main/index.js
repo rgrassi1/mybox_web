@@ -2,7 +2,12 @@ import React, { useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
-import './styles.css';
+import {
+    NewBoxContainer,
+    NewBoxFormContainer
+} from './styles';
+
+//import './styles.css';
 
 const Main = props => {
 
@@ -22,25 +27,25 @@ const Main = props => {
     }
     return (
         <Fragment>    
-                <div className='container'>
-                    <form onSubmit={handleSubmit}>
-                        <img src={logo} alt="" />
-                        <input placeholder="E-mail" required value={box.email} onChange={handleChange('email')}/>
-                        <input placeholder="Criar um box" required value={box.title} onChange={handleChange('title')}/>
-                        <button type="submit">Criar</button>
-                    </form>
-                </div>
+            {/*<div className='container'>
+                <form onSubmit={handleSubmit}>
+                    <img src={logo} alt="" />
+                    <input placeholder="E-mail" required value={box.email} onChange={handleChange('email')}/>
+                    <input placeholder="Criar um box" required value={box.title} onChange={handleChange('title')}/>
+                    <button type="submit">Criar</button>
+                </form>
+            </div>*/}
 
             { created && <Redirect to='/boxes' /> }
             { !created &&
-                <div className="container">
-                    <form onSubmit={handleSubmit}>
+                <NewBoxContainer>
+                    <NewBoxFormContainer onSubmit={handleSubmit}>
                         <img src={logo} alt="" />
                         <input placeholder="E-mail" required value={box.email} onChange={handleChange('email')}/>
                         <input placeholder="Criar um box" required value={box.title} onChange={handleChange('title')}/>
                         <button type="submit">Criar</button>
-                    </form>
-                </div>
+                    </NewBoxFormContainer>
+                </NewBoxContainer>
             }
         </Fragment>
     )
