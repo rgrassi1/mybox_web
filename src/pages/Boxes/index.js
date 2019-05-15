@@ -3,7 +3,15 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
-import './styles.css';
+import { 
+    BoxesGeneralContainer,
+    BoxesHeaderContainer,
+    BoxesLoadContainer,
+    BoxesNewBoxContainer,
+    BoxesContainer,
+    BoxesBoxContainer,
+    BoxesBoxElementContainer
+} from './styles';
 
 const Boxes = props => {
 
@@ -23,32 +31,40 @@ const Boxes = props => {
 
     const renderBox = box => {
         const data = new Date(box.createdAt);
-        const dataFmt = `${data.toLocaleDateString()} ${data.toLocaleTimeString()}`
         return (
-            <li key={box._id}>
-                <span><strong><Link to={`/boxes/${box._id}`}>{box.title}</Link></strong></span>
-                <span>{box.email}</span>
-                <span>{dataFmt}</span>
-            </li>
+            <BoxesBoxContainer key={box._id}>
+                <BoxesBoxElementContainer>
+                    <strong><Link to={`/boxes/${box._id}`}>{box.title}</Link></strong>
+                </BoxesBoxElementContainer>
+                <BoxesBoxElementContainer>{box.email}</BoxesBoxElementContainer>
+                <BoxesBoxElementContainer>{data.toLocaleDateString()}</BoxesBoxElementContainer>
+            </BoxesBoxContainer>
         )
     }
 
     return (
-        <div className='boxes-container'>
-            <header>
+        <BoxesGeneralContainer>
+            <BoxesHeaderContainer>
                 <img src={logo} alt=""/>
                 <h1>Boxes on the System</h1>
-            </header>
+            </BoxesHeaderContainer>
             { loading &&
-                <img src={load} alt=""/>
+                <BoxesLoadContainer>    
+                    <img src={load} alt=""/>
+                </BoxesLoadContainer>
             }
-            <div className='new-box'>
+            <BoxesNewBoxContainer>
                 <Link to="/"><strong>Criar novo box >></strong></Link>
-            </div>
+            </BoxesNewBoxContainer>
             { !loading &&
-                <ul>{ boxes.length > 0 ? boxes.map(box => renderBox(box)) : <li>Nehum box encontrado!</li> }</ul>
+                <BoxesContainer>
+                    { boxes.length > 0 
+                        ? boxes.map(box => renderBox(box)) 
+                        : <li>Nehum box encontrado!</li> 
+                    }
+                </BoxesContainer>
             }
-        </div>
+        </BoxesGeneralContainer>
     )
 }
 
