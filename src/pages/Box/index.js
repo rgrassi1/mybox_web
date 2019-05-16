@@ -73,8 +73,8 @@ class Box extends Component {
         const { id } = this.props.match.params;
 
         for (const file of files) {
-            const formData = new FormData();
-            formData.append('file', file);
+            const data = new FormData();
+            data.append('file', file);
             
             const fileUpload = { _id: file.lastModified, title: file.name, uploading: true };
 
@@ -83,7 +83,7 @@ class Box extends Component {
 
             this.setState({ box: { ...this.state.box, files: newFiles} });
 
-            await api.post(`/boxes/${id}/files`, formData);
+            await api.post(`/boxes/${id}/files`, data);
 
             this.setState({ box: { ...this.state.box, files: this.state.box.files.filter(file => file._id !== fileUpload._id)} });
         }

@@ -7,8 +7,6 @@ import {
     NewBoxFormContainer
 } from './styles';
 
-//import './styles.css';
-
 const Main = props => {
 
     const [box, setBox] = useState({ title: '', email: '' })
@@ -19,7 +17,7 @@ const Main = props => {
         setBox(newBox)
     }
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
         const response = await api.post('/boxes', box);
         setBox({ ...box, id: response.data._id });
@@ -27,15 +25,6 @@ const Main = props => {
     }
     return (
         <Fragment>    
-            {/*<div className='container'>
-                <form onSubmit={handleSubmit}>
-                    <img src={logo} alt="" />
-                    <input placeholder="E-mail" required value={box.email} onChange={handleChange('email')}/>
-                    <input placeholder="Criar um box" required value={box.title} onChange={handleChange('title')}/>
-                    <button type="submit">Criar</button>
-                </form>
-            </div>*/}
-
             { created && <Redirect to='/boxes' /> }
             { !created &&
                 <NewBoxContainer>
