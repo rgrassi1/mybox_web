@@ -18,9 +18,14 @@ export const BoxesHeaderContainer = styled.header`
     h1 {
         font: inherit;
         font-size: 21px;
+        color: #FFF;
         padding-left: 15px;
         margin-left: 15px;
         border-left: 1px solid #ddd;
+    }
+
+    img {
+        width: 64px;
     }
 `
 export const BoxesLoadContainer = styled.div`
@@ -29,11 +34,13 @@ export const BoxesLoadContainer = styled.div`
 `
 export const BoxesNewBoxContainer = styled.div`
     margin: 10px 0 20px 10px;  
-    a { text-decoration: none }  
+    a { text-decoration: none } 
+    strong {
+        color: #fff;
+    }
 `
 export const BoxesContainer = styled.ul`
     list-style-type: none;
-    border: 1px solid #ddd;
     border-radius: 4px; 
     display: flex;
     flex-direction: column;
@@ -43,13 +50,18 @@ export const BoxesBoxContainer = styled.li`
     padding: 5px;
     display: flex;
 
-    &:hover { background: #eee }
+    border-top: 1px solid #fff;
+    color: #fff;
+
+    &:hover { background: #fff; border-radius: 4px; color: #7159c1 }
 `
 export const BoxesBoxElementContainer = styled.span`
+
+    color: inherit;
+
     margin: 5px;
 
-    strong { color: #7159c1 }
-    a { text-decoration: none }
+    a { text-decoration: none; color: inherit; }
     
     &:nth-of-type(1) {
         flex: 1;
@@ -61,6 +73,5 @@ export const BoxesBoxElementContainer = styled.span`
 
     &:last-of-type {
         flex-basis: 60px;
-        font-size: 12px;
     }
 `

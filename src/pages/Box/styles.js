@@ -12,10 +12,14 @@ export const BoxHeaderContainer = styled.header`
     align-items: center;
     h1 {
         font: inherit;
+        color: #FFF;
         font-size: 21px;
         padding-left: 15px;
         margin-left: 15px;
         border-left: 1px solid #ddd;    
+    }
+    img {
+        width: 64px;
     }
 `
 export const BoxUserContainer = styled.section`

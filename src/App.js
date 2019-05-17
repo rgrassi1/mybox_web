@@ -1,8 +1,19 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Main from './pages/Main';
+import Boxes from './pages/Boxes';
+import Box from './pages/Box';
+import GlobalStyle from './styles/global'
 
-import Routes from './routes'
-
-const App = () => <Routes />
+const App = () => { 
+    return (
+        <Router>
+            <GlobalStyle />
+            <Route path="/" exact component={Main}/>
+            <Route path="/boxes/:id" exact component={Box}/>
+            <Route path="/boxes" exact component={Boxes}/>
+        </Router>
+    )
+}
 
 export default App;
