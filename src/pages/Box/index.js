@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { uniqueId } from 'lodash';
+import filesize from 'filesize';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
-import File from '../File';
-import Dropzone from 'react-dropzone';
+import FileList from '../FileList';
+import Upload from '../Upload';
+import { Container, Content } from '../../styles/styles';
 import { 
     BoxContainer,
     BoxHeaderContainer,
     BoxUserContainer,
     BoxLoadContainer,
-    BoxUploadContainer,
-    BoxFilesContainer
 } from './styles'
 
 const Box = props =>  {
@@ -25,57 +26,73 @@ const Box = props =>  {
         const { id } = props.match.params;
         
         setBox({ ...box, loading: true })
-        const response = await api.get(`/boxes/${id}`);  
-        setBox({ ...box, ...response.data, loading: false }, () => {
-            console.log(box);
+        const response = await api.get(`/boxes/${id}`); 
+
+        setBox({ ...box, ...response.data,  files: response.data.files.map(file => ({
+            file: file,
+            id: file._id,
+            name: file.name,
+            readableSize: filesize(file.size),
+            uploaded: true,
+            url: file.url
+        })),                      
+        loading: false });
+    }
+
+    const handleRemove = async id => {
+        await api.delete(`/files/${id}`); 
+        setBox({ ...box, files: box.files.filter(file => file.id !== id) })
+    }
+
+    const handleUpload = files => {
+        const filesToUpload = files.map(file => ({     
+            file,
+            id: uniqueId(),
+            name: file.name,
+            readableSize: filesize(file.size),
+            progress: 0,
+            uploaded: false,
+            error: false,
+            url: null
+        }));
+
+        const newFiles = box.files;
+        filesToUpload.forEach(file => {
+            newFiles.unshift(file);   
         });
+
+        setBox({ ...box, files: newFiles });
+
+        filesToUpload.forEach(processUpload);
     }
 
-    const handleRemove = async file => {
-        const foundFile = this.state.box.files.find(f => f._id === file._id)
-        const fileDelete = { ...foundFile, deleting: true }
-
-        const newFiles = this.state.box.files;
-
-        const idx = this.state.box.files.indexOf(foundFile);
-        newFiles[idx] = fileDelete;
-
-        this.setState({ box: { ...this.state.box, files: newFiles } });
-
-        await api.delete(`/files/${file._id}`); 
-
-        this.setState({ box: { ...this.state.box, files: this.state.box.files.filter(file => file._id !== fileDelete._id) } })
+    const updateFile = (id, data) => {
+        setBox({ ...box, files: box.files.map(file => {
+            return id === file.id ? { ...file, ...data } : file
+        })})
     }
 
-    const handleUpload = async files => {
-        const { id } = this.props.match.params;
+    const processUpload = fileToUpload => {
+        const { id } = props.match.params;
 
-        for (const file of files) {
-            const data = new FormData();
-            data.append('file', file);
-            
-            const fileUpload = { _id: file.lastModified, title: file.name, uploading: true };
+        const data = new FormData();
+        data.append('file', fileToUpload.file, fileToUpload.name);
 
-            const newFiles = this.state.box.files;
-            newFiles.unshift(fileUpload);
-
-            this.setState({ box: { ...this.state.box, files: newFiles} });
-
-            await api.post(`/boxes/${id}/files`, data);
-
-            this.setState({ box: { ...this.state.box, files: this.state.box.files.filter(file => file._id !== fileUpload._id)} });
-        }
-    }
-
-    const renderFile = file => {
-        return ( 
-            <File 
-                key={file._id} 
-                handleRemove={handleRemove} 
-                file={file}
-            />
-        )   
-    } 
+        api.post(`/boxes/${id}/files`, data, {
+            onUploadProgress: e => {
+                const progress = parseInt(Math.round(e.loaded * 100 / e.total));
+                updateFile(fileToUpload.id, { progress })
+            }
+        }).then(response => {
+            updateFile(fileToUpload.id, {
+                uploaded: true,
+                id: response.data._id,
+                url: response.data.url,
+            })
+        }).catch(e => {
+            updateFile(fileToUpload.id, { error: true })
+        })}
+        
 
     return (
         <BoxContainer>
@@ -86,166 +103,21 @@ const Box = props =>  {
             <BoxUserContainer>  
                 <span>{box.email}</span>
             </BoxUserContainer>
-            <Dropzone onDropAccepted={handleUpload}>
-                {({ getRootProps, getInputProps }) => (
-                    <BoxUploadContainer {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        <p>Arraste arquivos ou clique aqui</p>
-                    </BoxUploadContainer>
-                )}
-            </Dropzone>
-
             { box.loading &&
                 <BoxLoadContainer>
                     <img src={load} alt="Carregando..."/>
                 </BoxLoadContainer>
             }
             { !box.loading &&            
-                <BoxFilesContainer>                                
-                    { box.files && box.files.map(file => renderFile(file)) }                            
-                </BoxFilesContainer>        
+                <Container>   
+                    <Content>                             
+                        <Upload handleUpload={handleUpload}/>
+                        <FileList files={box.files} handleRemove={handleRemove}/>
+                    </Content>
+                </Container>        
             }
         </BoxContainer>
-    )
-    
+    )    
 }
 
 export default Box;
-
-/*import React, { Component } from 'react';
-import socket from 'socket.io-client';
-import api from '../../services/api';
-import logo from '../../assets/logo.svg';
-import load from '../../assets/loading.svg';
-import File from '../File';
-import Dropzone from 'react-dropzone';
-import { 
-    BoxContainer,
-    BoxHeaderContainer,
-    BoxUserContainer,
-    BoxLoadContainer,
-    BoxUploadContainer,
-    BoxFilesContainer
-} from './styles'
-
-class Box extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            box: { files: [] },
-            loading: false,
-        }    
-        this.io = socket('http://localhost:3333', { query: { match: 1 } });  
-    }
-
-    componentDidMount() {
-        this.subscribeFiles();
-        this.fetchBox();
-    }
-
-    subscribeFiles = () => {
-        this.io.on('new-file', payload => {
-            const boxNew = { ...this.state.box, files: [ payload, ...this.state.box.files ] }
-            this.setState({ box: boxNew });
-        })
-
-        this.io.on('delete-file', payload => {
-            const boxNew = { ...this.state.box, files: this.state.box.files.filter(file => file._id !== payload) }
-            this.setState({ box: boxNew })
-        })
-    }
-
-    fetchBox = async() => {
-        const { id } = this.props.match.params;
-        
-        this.setState({ loading: true })
-
-        const response = await api.get(`/boxes/${id}`);  
-        this.setState({ box: response.data })
-
-        this.setState({ loading: false })
-    }
-
-    handleRemove = async file => {
-        const foundFile = this.state.box.files.find(f => f._id === file._id)
-        const fileDelete = { ...foundFile, deleting: true }
-
-        const newFiles = this.state.box.files;
-
-        const idx = this.state.box.files.indexOf(foundFile);
-        newFiles[idx] = fileDelete;
-
-        this.setState({ box: { ...this.state.box, files: newFiles } });
-
-        await api.delete(`/files/${file._id}`); 
-
-        this.setState({ box: { ...this.state.box, files: this.state.box.files.filter(file => file._id !== fileDelete._id) } })
-    }
-
-    handleUpload = async files => {
-        const { id } = this.props.match.params;
-
-        for (const file of files) {
-            const data = new FormData();
-            data.append('file', file);
-            
-            const fileUpload = { _id: file.lastModified, title: file.name, uploading: true };
-
-            const newFiles = this.state.box.files;
-            newFiles.unshift(fileUpload);
-
-            this.setState({ box: { ...this.state.box, files: newFiles} });
-
-            await api.post(`/boxes/${id}/files`, data);
-
-            this.setState({ box: { ...this.state.box, files: this.state.box.files.filter(file => file._id !== fileUpload._id)} });
-        }
-    }
-
-    renderFile = file => {
-        return ( 
-            <File 
-                key={file._id} 
-                handleRemove={this.handleRemove} 
-                file={file}
-            />
-        )   
-    } 
-
-    render() {         
-        const { box, loading } = this.state;
-        return (
-            <BoxContainer>
-                <BoxHeaderContainer>
-                    <img src={logo} alt="" />
-                    <h1>{box.title}</h1>
-                </BoxHeaderContainer> 
-                <BoxUserContainer>  
-                    <span>{box.email}</span>
-                </BoxUserContainer>
-                <Dropzone onDropAccepted={this.handleUpload}>
-                    {({ getRootProps, getInputProps }) => (
-                        <BoxUploadContainer {...getRootProps()}>
-                            <input {...getInputProps()} />
-                            <p>Arraste arquivos ou clique aqui</p>
-                        </BoxUploadContainer>
-                    )}
-                </Dropzone>
-
-                { loading &&
-                    <BoxLoadContainer>
-                        <img src={load} alt="Carregando..."/>
-                    </BoxLoadContainer>
-                }
-                { !loading &&            
-                    <BoxFilesContainer>                                
-                        { box.files && box.files.map(file => this.renderFile(file)) }                            
-                    </BoxFilesContainer>        
-                }
-            </BoxContainer>
-        )
-    }
-}
-
-export default Box;*/

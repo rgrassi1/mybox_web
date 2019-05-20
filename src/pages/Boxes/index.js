@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
+import { Container, Content } from '../../styles/styles';
 import { 
     BoxesGeneralContainer,
     BoxesHeaderContainer,
     BoxesLoadContainer,
     BoxesNewBoxContainer,
     BoxesContainer,
-    BoxesBoxContainer,
-    BoxesBoxElementContainer
 } from './styles';
 
 const Boxes = props => {
@@ -32,13 +31,10 @@ const Boxes = props => {
     const renderBox = box => {
         const data = new Date(box.createdAt);
         return (
-            <BoxesBoxContainer key={box._id}>
-                <BoxesBoxElementContainer>
-                    <strong><Link to={`/boxes/${box._id}`}>{box.title}</Link></strong>
-                </BoxesBoxElementContainer>
-                <BoxesBoxElementContainer>{box.email}</BoxesBoxElementContainer>
-                <BoxesBoxElementContainer>{data.toLocaleDateString()}</BoxesBoxElementContainer>
-            </BoxesBoxContainer>
+            <li key={box._id}>
+                <span><strong><Link to={`/boxes/${box._id}`}>{box.title}</Link></strong></span>
+                <span>{`${data.toLocaleDateString()} ${data.toLocaleTimeString()}`}</span>
+            </li>
         )
     }
 
@@ -57,12 +53,16 @@ const Boxes = props => {
                 <Link to="/"><strong>Criar novo box >></strong></Link>
             </BoxesNewBoxContainer>
             { !loading &&
-                <BoxesContainer>
-                    { boxes.length > 0 
-                        ? boxes.map(box => renderBox(box)) 
-                        : <li>Nehum box encontrado!</li> 
-                    }
-                </BoxesContainer>
+                <Container>    
+                    <Content>    
+                        <BoxesContainer>
+                            { boxes.length > 0 
+                                ? boxes.map(box => renderBox(box)) 
+                                : <li>Nehum box encontrado!</li> 
+                            }
+                        </BoxesContainer>
+                    </Content>
+                </Container>
             }
         </BoxesGeneralContainer>
     )

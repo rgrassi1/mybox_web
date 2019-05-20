@@ -1,67 +1,41 @@
-import React, { useState } from 'react';
-import { MdInsertDriveFile } from 'react-icons/md';
-import { distanceInWords } from 'date-fns';
-import pt from 'date-fns/locale/pt';
-import remove from '../../assets/delete.svg';
-import { 
-    BoxFileContainer,
-    UploadingContainer,
-    FileContainer,
-    ElementsFileContainer,
-    ActionsFileContainer,
-    DeletingContainer
-} from './styles'
+import React from 'react';
+import { MdLink, MdError, MdCheckCircle } from 'react-icons/md';
+import { FileInfo } from './styles'
+import { CircularProgressbar } from 'react-circular-progressbar';
 
-const File = props => {
-
-    const [actions, setActions] = useState(false);
-
-    const onMouseHover = () => {
-        setActions(true);
-    }
-    const onMouseLeave = () => {
-        setActions(false);
-    }
-
-    const { file } = props
+const File = ({ file, handleRemove }) => {
     return (
         <li>
-            <BoxFileContainer onMouseLeave={onMouseLeave} onMouseOver={onMouseHover}>
-                { file.uploading &&
-                    <UploadingContainer>
-                        <span>{file.title}</span>
-                        <strong>uploading...</strong>
-                    </UploadingContainer>
-                }
+            <FileInfo>
+                <div>
+                    <strong>{file.name}</strong> 
+                    <span>
+                        {file.readableSize}{" "} 
+                        {file.uploaded && <button onClick={() => { handleRemove(file.id) }}>Excluir</button> }
+                    </span>
+                </div>
+            </FileInfo>
+            <div>
+                {!file.uploaded && !file.error && (
+                    <CircularProgressbar
+                        styles={{
+                            root: { width: 24 },
+                            path: { stroke: '#7159c1' }
+                        }}
+                        strokeWidth={10}
+                        value={file.progress}
+                    >
+                    </CircularProgressbar>
+                )}
 
-                { !file.uploading && !file.deleting &&
-                    <FileContainer>
-                        <ElementsFileContainer>
-                            <a href={file.url}>
-                                <MdInsertDriveFile size={22} color="#A5CFFF" />
-                                <strong>{file.title}</strong>
-                            </a>            
-                            <span>
-                                Há {distanceInWords(file.createdAt, new Date(), { locale: pt })}
-                            </span>
-                        </ElementsFileContainer>
-                        { actions &&
-                            <ActionsFileContainer>
-                                <button onClick={() => props.handleRemove(file)}>
-                                    <img src={remove} alt="Excluir"/>                        
-                                </button>                                
-                            </ActionsFileContainer>
-                        }
-                    </FileContainer>
-                }
-
-                { file.deleting &&
-                    <DeletingContainer>
-                        <span>{file.title}</span>
-                        <strong>deleting...</strong>
-                    </DeletingContainer>
-                }
-            </BoxFileContainer>
+                { file.url && (
+                    <a href={file.url} target='_blank' rel='noopener noreferrer'>
+                        <MdLink style={{ marginRight: 8 }} size={24} color='#222' />   
+                    </a>
+                )}
+                { file.uploaded && <MdCheckCircle size={24} color='#78e5d5' /> }
+                { file.error && <MdError size={24} color='#e57878' /> }
+            </div>
         </li>
     )
 }
