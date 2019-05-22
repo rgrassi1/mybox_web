@@ -4,15 +4,15 @@ import filesize from 'filesize';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
-import FileList from '../FileList';
-import Upload from '../Upload';
-import { Container, Content } from '../../styles/styles';
+import FileList from '../../components/FileList';
+import Upload from '../../components/Upload';
+import { Container, Content } from '../../styles/styled_components';
 import { 
     BoxContainer,
     BoxHeaderContainer,
     BoxUserContainer,
     BoxLoadContainer,
-} from './styles'
+} from './styles';
 
 class Box extends Component {
 

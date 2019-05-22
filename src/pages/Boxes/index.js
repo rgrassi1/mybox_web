@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
-import { Container, Content } from '../../styles/styles';
+import { Container, Content } from '../../styles/styled_components';
 import { 
     BoxesGeneralContainer,
     BoxesHeaderContainer,

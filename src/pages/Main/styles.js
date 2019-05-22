@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const NewBoxContainer = styled.div`
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center; 

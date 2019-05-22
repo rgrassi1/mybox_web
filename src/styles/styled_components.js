@@ -5,7 +5,6 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
 `
-
 export const Content = styled.div`
     width: 100%;
     max-width: 768px;

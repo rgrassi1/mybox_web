@@ -10,8 +10,8 @@ const App = () => {
         <Router>
             <GlobalStyle />
             <Route path="/" exact component={Main}/>
-            <Route path="/boxes/:id" exact component={Box}/>
             <Route path="/boxes" exact component={Boxes}/>
+            <Route path="/boxes/:id" component={Box}/>
         </Router>
     )
 }

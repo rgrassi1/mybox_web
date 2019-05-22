@@ -8,7 +8,6 @@ import {
 } from './styles';
 
 const Main = props => {
-
     const [box, setBox] = useState({ title: '', email: '' })
     const [created, setCreated] = useState(false);
 
