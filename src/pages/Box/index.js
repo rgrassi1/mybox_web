@@ -18,7 +18,11 @@ class Box extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { box: { loading: false, files: [] } }
+        this.state = { 
+            box: { files: [] },
+            loading: false,
+            error: false
+        }
     }
 
     componentDidMount() {
@@ -27,19 +31,30 @@ class Box extends Component {
 
     fetchBox = async() => {
         const { id } = this.props.match.params;
-        
-        this.setState({ box: { ...this.state.box, loading: true } })
-        const response = await api.get(`/boxes/${id}`); 
 
-        this.setState({ box: { ...this.state.box, ...response.data,  files: response.data.files.map(file => ({
-            file: file,
-            id: file._id,
-            name: file.name,
-            readableSize: filesize(file.size),
-            uploaded: true,
-            url: file.url
-        })),                      
-        loading: false }});
+        this.setState({ loading: true });
+        try {
+            const response = await api.get(`/boxes/${id}`); 
+            this.setState({ 
+                box: { 
+                    ...this.state.box,
+                    ...response.data,
+                     files: response.data.files.map(file => ({
+                        file: file,
+                        id: file._id,
+                        name: file.name,
+                        readableSize: filesize(file.size),
+                        uploaded: true,
+                        url: file.url
+                    })),                      
+                },
+                loading: false,
+                error: false,
+            });
+    
+        } catch(err) {
+            this.setState({ loading: false, error: true })
+        }
     }
 
     handleRemove = async id => {
@@ -99,7 +114,7 @@ class Box extends Component {
     }
         
     render() {
-        const { box } = this.state
+        const { box, loading, error } = this.state
         return (
             <BoxContainer>
                 <BoxHeaderContainer>
@@ -109,16 +124,21 @@ class Box extends Component {
                 <BoxUserContainer>  
                     <span>{box.email}</span>
                 </BoxUserContainer>
-                { box.loading &&
+                { loading &&
                     <BoxLoadContainer>
                         <img src={load} alt="Carregando..."/>
                     </BoxLoadContainer>
                 }
-                { !box.loading &&            
+                { !loading &&            
                     <Container>   
                         <Content>                             
                             <Upload handleUpload={this.handleUpload}/>
-                            <FileList files={this.state.box.files} handleRemove={this.handleRemove}/>
+                            { error &&
+                                <h3 style={{ textAlign: 'center', padding: 10 }}>Box não encontrado!</h3>
+                            }
+                            { !error &&
+                                <FileList files={this.state.box.files} handleRemove={this.handleRemove}/>
+                            }
                         </Content>
                     </Container>        
                 }
