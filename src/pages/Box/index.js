@@ -6,7 +6,7 @@ import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
 import FileList from '../../components/FileList';
 import Upload from '../../components/Upload';
-import { Container, Content } from '../../styles/styled_components';
+import { Container, Content } from '../../styles/components';
 import { 
     BoxContainer,
     BoxHeaderContainer,

@@ -1,0 +1,1 @@
+export const FETCH_BOXES = 'fetch_boxes';

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
+import BoxesContext from '../../context/boxes_context';
+import reducer from '../../reducer/boxes_reducer';
+import { fetchBoxes } from '../../actions';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
-import { Container, Content } from '../../styles/styled_components';
+import { Container, Content } from '../../styles/components';
 import { 
     BoxesGeneralContainer,
     BoxesHeaderContainer,
@@ -14,7 +17,7 @@ import {
 
 const Boxes = props => {
 
-    const [boxes, setBoxes] = useState([]);
+    /*const [boxes, setBoxes] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -36,10 +39,27 @@ const Boxes = props => {
                 <span>{`${data.toLocaleDateString()} ${data.toLocaleTimeString()}`}</span>
             </li>
         )
+    }*/
+
+    const [ state, dispatch ] = useReducer(reducer, { boxes: [] }); 
+
+    const fetch = async() => {
+        await fetchBoxes(dispatch);
+        console.log(state)
     }
 
+    useEffect(() => {
+        fetch();
+    }, [])
+
+    //console.log(JSON.stringify(state))
+
+
     return (
-        <BoxesGeneralContainer>
+        <BoxesContext.Provider value={{ boxes: state }}>
+            <List />
+        </BoxesContext.Provider>
+        /*<BoxesGeneralContainer>
             <BoxesHeaderContainer>
                 <img src={logo} alt=""/>
                 <h1>Boxes on the System</h1>
@@ -64,8 +84,16 @@ const Boxes = props => {
                     </Content>
                 </Container>
             }
-        </BoxesGeneralContainer>
+        </BoxesGeneralContainer>*/
     )
 }
 
 export default Boxes;
+
+const List = props => {
+    const context = useContext(BoxesContext);
+    //console.log(context)
+    return (
+        <h1>{JSON.stringify(context)}</h1>
+    )
+}
