@@ -4,7 +4,7 @@ import filesize from 'filesize';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
-import FileList from '../../components/FileList';
+import FileList from './FileList';
 import Upload from '../../components/Upload';
 import { Container, Content } from '../../styles/components';
 import { 

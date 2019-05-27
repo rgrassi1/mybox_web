@@ -24,10 +24,6 @@ export const BoxesHeaderContainer = styled.header`
 
     img { width: 64px; }
 `
-export const BoxesLoadContainer = styled.div`
-    margin: 20px;
-    text-align: center;
-`
 export const BoxesNewBoxContainer = styled.div`
     margin: 10px 0 20px 0;  
     a { text-decoration: none } 
@@ -43,4 +39,13 @@ export const BoxesContainer = styled.ul`
     }
 
     & + li { margin-top: 15px; }    
+`
+
+export const BoxesErrorContainer = styled.div`
+    text-align: center;
+    padding: 10px;
+    background: #FFF;
+    border-radius: 4px;
+
+    p { color: #444 }
 `

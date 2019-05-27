@@ -1,99 +1,66 @@
-import React, { useState, useEffect, useReducer, useContext } from 'react';
-import BoxesContext from '../../context/boxes_context';
-import reducer from '../../reducer/boxes_reducer';
-import { fetchBoxes } from '../../actions';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
+import { BoxesLoadContainer } from './List/styles';
+import { Link } from 'react-router-dom';
+import List from './List/index';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
-import { Container, Content } from '../../styles/components';
 import { 
     BoxesGeneralContainer,
     BoxesHeaderContainer,
-    BoxesLoadContainer,
     BoxesNewBoxContainer,
-    BoxesContainer,
+    BoxesErrorContainer,
 } from './styles';
 
 const Boxes = props => {
 
-    /*const [boxes, setBoxes] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        fetchBoxes();
-    }, [])
-
-    const fetchBoxes = async() => {
-        setLoading(true);
-        const response = await api.get('/boxes');
-        setLoading(false);
-        setBoxes(response.data);
-    }
-
-    const renderBox = box => {
-        const data = new Date(box.createdAt);
-        return (
-            <li key={box._id}>
-                <span><strong><Link to={`/boxes/${box._id}`}>{box.title}</Link></strong></span>
-                <span>{`${data.toLocaleDateString()} ${data.toLocaleTimeString()}`}</span>
-            </li>
-        )
-    }*/
-
-    const [ state, dispatch ] = useReducer(reducer, { boxes: [] }); 
-
-    const fetch = async() => {
-        await fetchBoxes(dispatch);
-        console.log(state)
-    }
+    const [ boxes, setBoxes ] = useState(null);
+    const [ loading, setLoading ] = useState(false);
+    const [ error, setError ] = useState(false);
 
     useEffect(() => {
         fetch();
     }, [])
 
-    //console.log(JSON.stringify(state))
-
+    const fetch = async() => {
+        setLoading(true);
+        try {
+            const response = await api.get('/boxes');
+            setLoading(false);
+            setBoxes(response.data);
+        } catch(err) {
+            setLoading(false);
+            setError(true)
+        }
+    }
 
     return (
-        <BoxesContext.Provider value={{ boxes: state }}>
-            <List />
-        </BoxesContext.Provider>
-        /*<BoxesGeneralContainer>
+        <BoxesGeneralContainer>
             <BoxesHeaderContainer>
                 <img src={logo} alt=""/>
                 <h1>Boxes on the System</h1>
             </BoxesHeaderContainer>
-            { loading &&
-                <BoxesLoadContainer>    
-                    <img src={load} alt=""/>
-                </BoxesLoadContainer>
-            }
             <BoxesNewBoxContainer>
                 <Link to="/"><strong>Criar novo box >></strong></Link>
             </BoxesNewBoxContainer>
-            { !loading &&
-                <Container>    
-                    <Content>    
-                        <BoxesContainer>
-                            { boxes.length > 0 
-                                ? boxes.map(box => renderBox(box)) 
-                                : <li>Nehum box encontrado!</li> 
-                            }
-                        </BoxesContainer>
-                    </Content>
-                </Container>
+
+            { loading &&   
+                <BoxesLoadContainer>
+                    <img src={load} alt=""/>
+                </BoxesLoadContainer>  
             }
-        </BoxesGeneralContainer>*/
+            {!loading && boxes &&
+                <List boxes={boxes}/>
+            } 
+            
+            { error && 
+                <BoxesErrorContainer> 
+                    <p><strong>Atualize a página para buscar os boxes.</strong></p> 
+                </BoxesErrorContainer>
+            }            
+
+        </BoxesGeneralContainer>
     )
 }
 
 export default Boxes;
-
-const List = props => {
-    const context = useContext(BoxesContext);
-    //console.log(context)
-    return (
-        <h1>{JSON.stringify(context)}</h1>
-    )
-}
