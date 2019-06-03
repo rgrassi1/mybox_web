@@ -34,7 +34,7 @@ class Box extends Component {
 
         this.setState({ loading: true });
         try {
-            const response = await api.get(`/boxes/${id}`); 
+            const response = await api.get(`/restrito/boxes/${id}`); 
             this.setState({ 
                 box: { 
                     ...this.state.box,
@@ -58,7 +58,7 @@ class Box extends Component {
     }
 
     handleRemove = async id => {
-        await api.delete(`/files/${id}`); 
+        await api.delete(`/restrito/files/${id}`); 
         this.setState({ box: { ...this.state.box, files: this.state.box.files.filter(file => file.id !== id) } })
     }
 
@@ -97,7 +97,7 @@ class Box extends Component {
         const data = new FormData();
         data.append('file', fileToUpload.file, fileToUpload.name);
 
-        api.post(`/boxes/${id}/files`, data, {
+        api.post(`/restrito/boxes/${id}/files`, data, {
             onUploadProgress: e => {
                 const progress = parseInt(Math.round((e.loaded * 100) / e.total));
                 this.updateFile(fileToUpload.id, { progress })

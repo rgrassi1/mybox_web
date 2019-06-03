@@ -25,7 +25,7 @@ const Boxes = props => {
     const fetch = async() => {
         setLoading(true);
         try {
-            const response = await api.get('/boxes');
+            const response = await api.get('/restrito/boxes');
             setLoading(false);
             setBoxes(response.data);
         } catch(err) {
