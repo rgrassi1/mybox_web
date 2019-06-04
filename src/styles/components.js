@@ -12,3 +12,14 @@ export const Content = styled.div`
     border-radius: 4px;
     padding: 10px;
 `
+export const Button = styled.button`
+        padding: 15px;        
+        font-size: 16px;
+        font-weight: bold;
+        background: #7159d9;
+        color: #DDD;      
+        border-radius: 4px;
+        border: 0;
+        cursor: pointer;         
+        &:hover { opacity: 0.8 }
+`

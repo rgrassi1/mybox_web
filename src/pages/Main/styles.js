@@ -7,10 +7,11 @@ export const NewBoxContainer = styled.div`
     align-items: center; 
 `
 export const NewBoxFormContainer = styled.form`
-    width: 300px;
+    width: 320px;
     display: flex;
     flex-direction: column; 
-    align-items: center; 
+    justify-content: center; 
+    padding: 10px;
     
     input {
         font: inherit;
@@ -20,12 +21,9 @@ export const NewBoxFormContainer = styled.form`
         font-size: 16px;
         padding: 0 20px;
         margin-top: 10px; 
-        
-        width: 100%;   
     }
 
     button {
-        font: inherit;
         height: 48px;
         background: #7159d9;
         border-radius: 4px;
@@ -36,12 +34,12 @@ export const NewBoxFormContainer = styled.form`
         font-weight: bold;
         border: 0;
         cursor: pointer; 
-        width: 100%;        
         
         &:hover { opacity: 0.8 }
     }
 
     img {
-        width: 88px;
+        width: 100px;
+        align-self: center;
     }
 `
