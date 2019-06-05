@@ -17,15 +17,11 @@ const SignIn = props => {
         const { email, password } = event.target;
         const data = { email: email.value, password: password.value };
         await signIn(dispatch, data);
-    } 
-    
-    
-    const { isAuth } = state;
-    console.log(state)
-
-    if (isAuth) {
-        return <Redirect to="/" />
     }
+    
+    if (state.isAuth) {
+        return <Redirect to="/boxes" />
+    } else {
 
     return (
         <Container>
@@ -39,6 +35,7 @@ const SignIn = props => {
             </Content>
         </Container>
     )
+    }
 }
 
 export default SignIn

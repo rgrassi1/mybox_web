@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import MyBoxContext from './';
 import { userReducer } from '../reducers';
-import { initUser } from '../actions';
+import { checkAuth } from '../actions';
 
 const GlobalState = props => {
 
@@ -9,13 +9,13 @@ const GlobalState = props => {
         user: null,
         isAuth: false,
         error: false,
-        errorMsg: null
+        msgError: null
     };
 
     const [ state, dispatch ] = useReducer(userReducer, INITIAL_STATE);
 
     useEffect(() => {
-        initUser(dispatch);
+        checkAuth(dispatch);
     }, [])
 
     return (

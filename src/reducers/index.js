@@ -1,4 +1,4 @@
-import { SIGNED_USER, SIGN_USER_FAILED, INIT_USER } from './types';
+import { SIGNED_USER, SIGN_USER_FAILED } from './types';
 
 export const userReducer = (state, action) => {
     switch(action.type) {
@@ -6,11 +6,8 @@ export const userReducer = (state, action) => {
             return { ...state, isAuth: true, user: action.payload, error: false, msgError: null }
         }  
         case SIGN_USER_FAILED: {
-            return { ...state, isAuth: false, user: null, error: true, msgError: 'Wrong credentials' }
+            return { ...state, isAuth: false, user: null, error: true, msgError: action.payload }
         }  
-        case INIT_USER: {
-            return { ...state, isAuth: true, user: action.payload, erro: false, msgError: '' }
-        }
         default:
             return state    
     }
