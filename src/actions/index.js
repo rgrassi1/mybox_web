@@ -20,16 +20,23 @@ export const signIn = async(dispatch, credentials) => {
     }
 } 
 
-export const checkAuth = dispatch => {
+export const checkAuth = async dispatch => {
     const token = localStorage.getItem('mybox_token');
     if (token) {
         try {
+            await api.get('/token', { 
+                headers: { 'x-access-token': token }
+            })
+
             const user = jwtDecode(token);        
-            dispatch({ type: SIGNED_USER, payload: user })
+            dispatch({ type: SIGNED_USER, payload: user });
         } catch(err) {
-            dispatch({ type: SIGN_USER_FAILED, payload: err })
+            const message = err.response.data.message;
+            const msg = !!message ? message.message : err;
+
+            dispatch({ type: SIGN_USER_FAILED, payload: msg })
         }
     } else {
-        dispatch({ type: SIGN_USER_FAILED, payload: "no token" })
+        dispatch({ type: SIGN_USER_FAILED, payload: 'no token' })
     }
 }

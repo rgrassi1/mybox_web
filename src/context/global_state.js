@@ -19,7 +19,7 @@ const GlobalState = props => {
     }, [])
 
     return (
-        <MyBoxContext.Provider value={{ state: state, dispatch }}>
+        <MyBoxContext.Provider value={{ state, dispatch }}>
             {props.children}
         </MyBoxContext.Provider>
     )
