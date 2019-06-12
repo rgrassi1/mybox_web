@@ -11,13 +11,14 @@ export const Content = styled.div`
     flex-direction: column;
     align-items: center;
 
-    width: 320px;
-    height: 420px;
+    width: 448px;
+    height: 500px;
     margin: 0 10px 0 10px;
     padding: 10px;
 
     background: #FFF;
-    border-radius: 6px;
+    border-radius: 8px;
+    border: 1px solid #dadce0;
 `
 export const Avatar = styled.div`
     margin-top: 40px;

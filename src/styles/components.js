@@ -13,11 +13,13 @@ export const Content = styled.div`
     padding: 10px;
 `
 export const Button = styled.button`
+        display: inline-flex;
+        justify-content: center;
         padding: 15px;        
         font-size: 16px;
         font-weight: bold;
-        background: #7159d9;
-        color: #DDD;      
+        background: #1a73e8;
+        color: #FFF;      
         border-radius: 4px;
         border: 0;
         cursor: pointer;         

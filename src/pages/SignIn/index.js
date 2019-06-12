@@ -17,25 +17,27 @@ const SignIn = props => {
         const { email, password } = event.target;
         const data = { email: email.value, password: password.value };
         await signIn(dispatch, data);
-    }
+    }    
     
     if (state.isAuth) {
         return <Redirect to="/boxes" />
-    } else {
-
+    }
+    
     return (
         <Container>
             <Content>
                 <Avatar url={url} />
                 <Form onSubmit={handleSubmit}>
-                    <input name="email" placeholder="E-mail" type="text"/>
+                    <input name="email" placeholder="E-mail" type="text" />
                     <input name="password" placeholder="Senha" type="password" autoComplete="off"/>
-                    <Button>Entrar</Button>
+                    <div>
+                        <Button>Entrar</Button>
+                        
+                    </div>
                 </Form>
             </Content>
         </Container>
-    )
-    }
+    )    
 }
 
 export default SignIn
