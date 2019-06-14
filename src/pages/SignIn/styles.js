@@ -14,14 +14,14 @@ export const Content = styled.div`
     width: 448px;
     height: 500px;
     margin: 0 10px 0 10px;
-    padding: 10px;
+    padding: 25px;
 
     background: #FFF;
     border-radius: 8px;
     border: 1px solid #dadce0;
 `
 export const Avatar = styled.div`
-    margin-top: 40px;
+    margin: 30px 0px 20px 0px;
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -40,12 +40,16 @@ export const Form = styled.form`
     padding: 0 10px;
 
     input {
-        font-size: 16px;
-        padding: 15px;
-        border-radius: 4px;
-        border: 1px solid #DDD;
-
-        color: #444;
         margin-bottom: 5px;
+    }
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        a {
+            text-decoration: none;
+            color: #7159c1;
+        }
     }
 `

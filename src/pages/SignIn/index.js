@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { Container, Content, Avatar, Form } from './styles';
 import { Button } from '../../styles/components';
 import { signIn } from '../../actions';
 import UserContext from '../../context';
-
-const url = 'avatar.jpg'
+import url from '../../assets/logo.svg'
+import { Field } from '../../styles/components'
 
 const SignIn = props => {
 
@@ -27,12 +27,13 @@ const SignIn = props => {
         <Container>
             <Content>
                 <Avatar url={url} />
+                <h1>Login</h1>
                 <Form onSubmit={handleSubmit}>
-                    <input name="email" placeholder="E-mail" type="text" />
-                    <input name="password" placeholder="Senha" type="password" autoComplete="off"/>
+                    <Field name="email" placeholder="E-mail" type="text" />
+                    <Field name="password" placeholder="Senha" type="password" autoComplete="off"/>
                     <div>
+                        <Link to="/signup">Criar conta</Link>
                         <Button>Entrar</Button>
-                        
                     </div>
                 </Form>
             </Content>

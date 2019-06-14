@@ -13,11 +13,15 @@ export default createGlobalStyle`
         font-family: Arial, Helvetica, sans-serif;
         font-size: 14px;
         background: #fff;
-
-        /*background: #7159c1*/
     }
 
     #root, body, html {
         height: 100%;
+    }
+
+    h1 {
+        color: #444;
+        font-size: 2em;
+        font-weight: 400;
     }
 `
