@@ -1,7 +1,6 @@
 import React from 'react';
-import { Container, Content } from '../../../styles/components';
 import { Link } from 'react-router-dom';
-import { BoxesContainer } from './styles';
+import { Container, Content, BoxesContainer } from './styles';
 
 const Box = props => {   
 

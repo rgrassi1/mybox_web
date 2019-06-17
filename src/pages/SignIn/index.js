@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import { Container, Content, Avatar, Form } from './styles';
-import { Button } from '../../styles/components';
+import { Container, Content, Form, FormActions } from './styles';
+import { Button, Logo } from '../../components/styled';
+import TextField from '../../components/TextField';
+import PasswordField from '../../components/PasswordField';
 import { signIn } from '../../actions';
 import UserContext from '../../context';
-import url from '../../assets/logo.svg'
-import { Field } from '../../styles/components'
 
 const SignIn = props => {
 
@@ -26,15 +26,15 @@ const SignIn = props => {
     return (
         <Container>
             <Content>
-                <Avatar url={url} />
+                <Logo />
                 <h1>Login</h1>
                 <Form onSubmit={handleSubmit}>
-                    <Field name="email" placeholder="E-mail" type="text" />
-                    <Field name="password" placeholder="Senha" type="password" autoComplete="off"/>
-                    <div>
+                    <TextField name="email" placeholder="E-mail" />
+                    <PasswordField name="password" placeholder="Senha" />
+                    <FormActions>
                         <Link to="/signup">Criar conta</Link>
-                        <Button>Entrar</Button>
-                    </div>
+                        <Button type="submit">Entrar</Button>
+                    </FormActions>
                 </Form>
             </Content>
         </Container>

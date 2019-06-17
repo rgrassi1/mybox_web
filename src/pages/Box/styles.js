@@ -33,7 +33,15 @@ export const BoxLoadContainer = styled.section`
     text-align: center;
     img { margin-top: 40px; }
 `
-export const BoxFilesContainer = styled.ul`
-    margin: 30px 0;
-    list-style: none;
+export const BoxFilesContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+export const BoxFilesContent = styled.div`
+    width: 100%;
+    max-width: 768px;
+    background: #FFF;
+    border-radius: 4px;
+    padding: 10px;
 `

@@ -4,6 +4,7 @@ import Main from './pages/Main';
 import Boxes from './pages/Boxes';
 import Box from './pages/Box';
 import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 
 export default Routes => (
     <Router>
@@ -11,5 +12,6 @@ export default Routes => (
         <Route path="/boxes" exact component={Boxes}/>
         <Route path="/boxes/:id" component={Box}/>
         <Route path="/signin" component={SignIn}/>
+        <Route path="/signup" component={SignUp}/>
     </Router>
 )

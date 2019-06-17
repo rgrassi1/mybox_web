@@ -6,12 +6,13 @@ import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
 import FileList from './FileList';
 import Upload from '../../components/Upload';
-import { Container, Content } from '../../styles/components';
 import { 
     BoxContainer,
     BoxHeaderContainer,
     BoxUserContainer,
     BoxLoadContainer,
+    BoxFilesContainer,
+    BoxFilesContent
 } from './styles';
 
 class Box extends Component {
@@ -130,8 +131,8 @@ class Box extends Component {
                     </BoxLoadContainer>
                 }
                 { !loading &&            
-                    <Container>   
-                        <Content>                             
+                    <BoxFilesContainer>   
+                        <BoxFilesContent>                             
                             <Upload handleUpload={this.handleUpload}/>
                             { error &&
                                 <h3 style={{ textAlign: 'center', padding: 10 }}>Box não encontrado!</h3>
@@ -139,8 +140,8 @@ class Box extends Component {
                             { !error &&
                                 <FileList files={this.state.box.files} handleRemove={this.handleRemove}/>
                             }
-                        </Content>
-                    </Container>        
+                        </BoxFilesContent>
+                    </BoxFilesContainer>        
                 }
             </BoxContainer>
         )    

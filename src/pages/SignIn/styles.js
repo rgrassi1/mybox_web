@@ -19,6 +19,12 @@ export const Content = styled.div`
     background: #FFF;
     border-radius: 8px;
     border: 1px solid #dadce0;
+
+    h1 {
+        color: #202124;
+        font-size: 24px;
+        font-weight: 400;
+    }
 `
 export const Avatar = styled.div`
     margin: 30px 0px 20px 0px;
@@ -39,17 +45,16 @@ export const Form = styled.form`
     width: 100%;
     padding: 0 10px;
 
-    input {
+    div {
         margin-bottom: 5px;
     }
-
-    div {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-        a {
-            text-decoration: none;
-            color: #7159c1;
-        }
+`
+export const FormActions = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    a {
+        text-decoration: none;
+        color: #7159c1;
     }
 `
