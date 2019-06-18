@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import UserContext from '../../context';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import { BoxesLoadContainer } from './List/styles';
 import List from './List/index';
@@ -15,9 +14,6 @@ import {
 
 
 const Boxes = props => {
-
-    const { state } = useContext(UserContext);
-
     const [ boxes, setBoxes ] = useState(null);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(false);
@@ -39,10 +35,6 @@ const Boxes = props => {
             setLoading(false);
             setError(true)
         }
-    }
-
-    if (!state.isAuth) {
-        return <Redirect to="/signin"/>
     }
 
     return (

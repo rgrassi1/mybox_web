@@ -17,10 +17,11 @@ const SignIn = props => {
         const { email, password } = event.target;
         const data = { email: email.value, password: password.value };
         await signIn(dispatch, data);
-    }    
-    
+    }       
+
     if (state.isAuth) {
-        return <Redirect to="/boxes" />
+        const { from } = props.location.state || { from: { pathname: '/' } };
+        return <Redirect to={from} />
     }
     
     return (
