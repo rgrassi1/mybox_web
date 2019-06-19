@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
-import { Password } from './styles'
+import { Container } from './styles'
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
 const PasswordField = props => {
 
-    const [ isVisibled, setVisible ] = useState(false)
+    const [ isVisible, setVisible ] = useState(false)
 
     const handleClick = () => {
-        setVisible(!isVisibled);
+        setVisible(!isVisible);
     }
 
     return (
-        <Password>    
+        <Container>    
             <input
                 name={props.name} 
                 placeholder={props.placeholder} 
                 autoComplete="off"
-                type={ !isVisibled ? "password" : "text" } 
+                type={ !isVisible ? "password" : "text" } 
             />
-            { !isVisibled &&
+            { !isVisible &&
                 <MdVisibility size='2em' color='#444' onClick={handleClick}/>                    
             }
-            { isVisibled &&
+            { isVisible &&
                 <MdVisibilityOff size='2em' color='#444' onClick={handleClick}/>        
             }
-        </Password>    
+        </Container>    
     )
 }
 

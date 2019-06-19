@@ -1,16 +1,16 @@
 import React from 'react';
-import { Field } from './styles'
+import { Container } from './styles'
 
 const TextField = props => {
     return (
-        <Field>    
+        <Container>    
             <input
                 name={props.name} 
                 placeholder={props.placeholder} 
                 autoComplete="off"
                 type="text" 
             />
-        </Field>    
+        </Container>    
     )
 }
 

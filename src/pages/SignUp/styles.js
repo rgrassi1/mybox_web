@@ -38,6 +38,7 @@ export const Form = styled.form`
         margin-bottom: 5px;
     }
 `
+
 export const FormActions = styled.div`
     display: flex;
     justify-content: space-between;

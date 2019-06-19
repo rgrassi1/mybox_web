@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Field = styled.div`
+export const Container = styled.div`
     border: 1px solid #ddd;
     border-radius: 4px;
 

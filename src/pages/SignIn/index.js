@@ -11,6 +11,11 @@ const SignIn = props => {
 
     const { state, dispatch } = useContext(UserContext);
 
+    if (state.isAuth) {
+        const { from } = props.location.state || { from: { pathname: '/' } };
+        return <Redirect to={from} />
+    }
+
     const handleSubmit = async event => {
         event.preventDefault();        
 
@@ -19,11 +24,6 @@ const SignIn = props => {
         await signIn(dispatch, data);
     }       
 
-    if (state.isAuth) {
-        const { from } = props.location.state || { from: { pathname: '/' } };
-        return <Redirect to={from} />
-    }
-    
     return (
         <Container>
             <Content>
