@@ -19,6 +19,13 @@ export const Content = styled.div`
     background: #FFF;
     border-radius: 8px;
     border: 1px solid #dadce0;
+
+    p {
+        line-height: 1.5;
+        font-size: 16px;
+        padding-top: 10px;
+        text-align: justify;
+    }
 `
 export const Form = styled.form`
     flex: 1;    

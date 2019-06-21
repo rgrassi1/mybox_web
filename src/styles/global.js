@@ -20,8 +20,8 @@ export default createGlobalStyle`
     }
 
     h1 {
-        color: #444;
-        font-size: 2em;
+        color: #202124;
+        font-size: 1.75em;
         font-weight: 400;
     }
 `
