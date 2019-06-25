@@ -5,7 +5,6 @@ import Boxes from './pages/Boxes';
 import Box from './pages/Box';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import Confirm from './pages/SignUp/Confirm';
 import UserContext from './context';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -26,6 +25,5 @@ export default Routes => (
         <PrivateRoute path="/boxes/:id" component={Box}/>
         <Route path="/signin" component={SignIn}/>
         <Route path="/signup" exact component={SignUp}/>
-        <Route path="/signup/email" exact component={Confirm}/>
     </Router>
 )

@@ -4,12 +4,7 @@ import { Container } from './styles'
 const TextField = props => {
     return (
         <Container>    
-            <input
-                name={props.name} 
-                placeholder={props.placeholder} 
-                autoComplete="off"
-                type="text" 
-            />
+            <input {...props} autoComplete="off" type="text" />
         </Container>    
     )
 }

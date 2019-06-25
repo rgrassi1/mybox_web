@@ -13,11 +13,7 @@ const PasswordField = props => {
     return (
         <Container>    
             <input
-                name={props.name} 
-                placeholder={props.placeholder} 
-                autoComplete="off"
-                type={ !isVisible ? "password" : "text" } 
-            />
+                {...props} autoComplete="off" type={ !isVisible ? "password" : "text" } />
             { !isVisible &&
                 <MdVisibility size='2em' color='#444' onClick={handleClick}/>                    
             }

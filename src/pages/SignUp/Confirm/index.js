@@ -7,7 +7,7 @@ import { Logo, Button } from '../../../components/styled';
 const Confirm = props => {
 
     const handleSubmit = () => {
-        
+
     }
 
     return (
@@ -16,9 +16,9 @@ const Confirm = props => {
                 <Logo />
                 <h1>Verifique seu e-mail</h1>
                 <p>Para sua segurança, o MyBox quer confirmar se é realmente você. 
-                O MyBox enviará um e-mail com um link de confirmação.</p>
+                O MyBox enviará por e-mail um link para você ativar sua conta.</p>
                 <Form onSubmit={handleSubmit}>
-                    <TextField name="e-mail" placeholder="E-mail"/>
+                    <TextField disabled={true} value={props.user.email} name="e-mail" placeholder="E-mail"/>
                     <FormActions>
                         <Link to="/signup">Voltar</Link>
                         <Button type="submit">Enviar</Button>
@@ -30,4 +30,3 @@ const Confirm = props => {
 }
 
 export default Confirm;
-

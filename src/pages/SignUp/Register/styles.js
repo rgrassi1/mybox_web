@@ -19,12 +19,9 @@ export const Content = styled.div`
     background: #FFF;
     border-radius: 8px;
     border: 1px solid #dadce0;
-
-    p {
-        padding: 10px 10px 20px 10px;
-    }
 `
 export const Form = styled.form`
+    flex: 1;    
     display: flex;
     flex-direction: column;
     justify-content: center;
