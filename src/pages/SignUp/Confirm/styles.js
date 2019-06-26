@@ -22,6 +22,7 @@ export const Content = styled.div`
 
     p {
         padding: 10px 10px 20px 10px;
+        text-align: justify;
     }
 `
 export const Form = styled.form`
@@ -31,16 +32,7 @@ export const Form = styled.form`
     width: 100%;
     padding: 0 10px;
 
-    div {
-        margin-bottom: 5px;
-    }
-`
-export const FormActions = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    a {
-        text-decoration: none;
-        color: #7159c1;
+    button {
+        margin-top: 20px;
     }
 `
