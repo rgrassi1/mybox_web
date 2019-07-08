@@ -5,18 +5,17 @@ import jwtDecode from 'jwt-decode';
 export const signIn = async(dispatch, credentials) => {
     try {
         const response = await api.post('/user/signin', credentials);
-        if (response.data.token) {
-            const token = response.data.token;
+        const { token } = response.data
+        if (token) {
             localStorage.setItem('mybox_token', token);
             const user = jwtDecode(token);
-            localStorage.setItem('mybox_user', JSON.stringify(user));
-    
-            dispatch({ type: SIGNED_USER, payload: user})
+            localStorage.setItem('mybox_user', JSON.stringify(user));    
+            dispatch({ type: SIGNED_USER, payload: user })
         } else {
             dispatch({ type: SIGN_USER_FAILED, payload: response.data.message })
         }    
     } catch(err) {
-        dispatch({ type: SIGN_USER_FAILED, payload: err })
+        dispatch({ type: SIGN_USER_FAILED, payload: err.message })
     }
 } 
 

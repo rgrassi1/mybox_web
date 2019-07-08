@@ -9,7 +9,7 @@ const GlobalState = props => {
         user: null,
         isAuth: false,
         error: false,
-        msgError: null
+        message: null
     };
 
     const [ state, dispatch ] = useReducer(userReducer, INITIAL_STATE);
