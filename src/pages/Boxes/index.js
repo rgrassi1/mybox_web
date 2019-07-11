@@ -12,7 +12,6 @@ import {
     BoxesErrorContainer,
 } from './styles';
 
-
 const Boxes = props => {
     const [ boxes, setBoxes ] = useState(null);
     const [ loading, setLoading ] = useState(false);

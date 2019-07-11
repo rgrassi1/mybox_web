@@ -28,7 +28,7 @@ const Confirm = props => {
                 <p>Para sua segurança, o MyBox quer confirmar se é realmente você. 
                 O MyBox enviará por e-mail um link para você ativar sua conta.</p>
                 <Form onSubmit={handleSubmit}>
-                    <TextField disabled={true} value={email} name="e-mail" placeholder="E-mail"/>
+                    <TextField type="email" disabled={true} value={email} name="e-mail" placeholder="E-mail"/>
                     <Button type="submit">Enviar</Button>
                 </Form>
             </Content>

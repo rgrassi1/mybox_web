@@ -41,7 +41,7 @@ const SignIn = props => {
                     </div>           
                 }        
                 <Form onSubmit={handleSubmit}>
-                    <TextField required name="email" placeholder="E-mail" />
+                    <TextField type="email" required name="email" placeholder="E-mail" />
                     <PasswordField required name="password" placeholder="Senha" />
                     <FormActions>
                         <Link to="/signup">Criar conta</Link>

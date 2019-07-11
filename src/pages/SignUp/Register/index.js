@@ -26,7 +26,7 @@ const Register = props => {
         }
     }  
     
-    const handleInfoClose = () => {
+    const handleSignUpError = () => {
         setMessage(null)
     }
 
@@ -37,11 +37,11 @@ const Register = props => {
                 <h1>Criar conta</h1>
                 { message &&
                     <div style={{ width: '100%', padding: '20px 10px 0 10px' }}>
-                        <Info closeAction={handleInfoClose} message={message} background="#ffdce0" color="#86181d" />
+                        <Info closeAction={handleSignUpError} message={message} background="#ffdce0" color="#86181d" />
                     </div>           
                 }        
                 <Form onSubmit={handleSubmit}>
-                    <TextField required name="email" placeholder="E-mail" />
+                    <TextField type="email" required name="email" placeholder="E-mail" />
                     <PasswordField required name="password" placeholder="Senha" />
                     <FormActions>
                         <Link to="/signin">Entrar na minha conta</Link>

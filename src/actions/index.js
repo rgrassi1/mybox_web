@@ -1,5 +1,5 @@
 import api from '../services/api';
-import { SIGNED_USER, SIGN_USER_FAILED } from '../reducers/types';
+import { SIGNED_USER, SIGN_USER_FAILED, UNSIGNED_USER } from '../reducers/types';
 import jwtDecode from 'jwt-decode';
 
 export const signIn = async(dispatch, credentials) => {
@@ -32,6 +32,6 @@ export const checkAuth = async dispatch => {
             dispatch({ type: SIGN_USER_FAILED, payload: msg })
         }
     } else {
-        dispatch({ type: SIGN_USER_FAILED, payload: 'no token' })
+        dispatch({ type: UNSIGNED_USER })
     }
 }
