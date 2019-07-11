@@ -13,7 +13,7 @@ import {
 } from './styles';
 
 const Boxes = props => {
-    const [ boxes, setBoxes ] = useState(null);
+    const [ boxes, setBoxes ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(false);
 
@@ -51,10 +51,16 @@ const Boxes = props => {
                     <img src={load} alt=""/>
                 </BoxesLoadContainer>  
             }
-            {!loading && boxes &&
+            { boxes.length > 0 &&
                 <List boxes={boxes}/>
             } 
-            
+
+            { boxes.length === 0 && !loading &&
+                <BoxesErrorContainer>
+                    <p><strong>Nenhum box encontrado!</strong></p> 
+                </BoxesErrorContainer>
+            } 
+
             { error && 
                 <BoxesErrorContainer> 
                     <p><strong>Atualize a página para buscar os boxes.</strong></p> 

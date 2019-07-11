@@ -10,7 +10,7 @@ export const Content = styled.div`
     max-width: 768px;
     background: #FFF;
     border-radius: 4px;
-    padding: 10px;
+    padding: 10px 0 10px 0;
 `
 export const BoxesContainer = styled.ul`
     li {

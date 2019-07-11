@@ -18,7 +18,7 @@ const Box = props => {
         <Container>    
             <Content>    
                 <BoxesContainer>
-                    { props.boxes.length > 0 ? props.boxes.map(box => renderBox(box)) : <li>Nada!</li> }
+                    { props.boxes.length > 0 ? props.boxes.map(box => renderBox(box)) : <li>Nenhum box encontrado!</li> }
                 </BoxesContainer>
             </Content>
         </Container>

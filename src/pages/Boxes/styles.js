@@ -16,18 +16,17 @@ export const BoxesHeaderContainer = styled.header`
 
     h1 {
         font-size: 22px;
-        color: #FFF;
+        color: #444;
         padding-left: 15px;
         margin-left: 15px;
         border-left: 1px solid #ddd;
     }
-
     img { width: 64px; }
 `
 export const BoxesNewBoxContainer = styled.div`
     margin: 10px 0 20px 0;  
     a { text-decoration: none } 
-    strong { color: #fff; }
+    strong { color: #7159c1; }
 `
 export const BoxesContainer = styled.ul`
     li {
@@ -37,15 +36,12 @@ export const BoxesContainer = styled.ul`
         color: #444;
         a { color: inherit; }
     }
-
     & + li { margin-top: 15px; }    
 `
-
 export const BoxesErrorContainer = styled.div`
-    text-align: center;
     padding: 10px;
-    background: #FFF;
+    margin-top: 10px;
+    background: #7159c1;
     border-radius: 4px;
-
-    p { color: #444 }
+    p { color: #fff }
 `
