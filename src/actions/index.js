@@ -23,13 +23,11 @@ export const checkAuth = async dispatch => {
     const token = localStorage.getItem('mybox_token');
     if (token) {
         try {
-            await api.get('/token', { headers: { 'x-access-token': token } })
+            await api.get('/token');
             const user = jwtDecode(token);        
             dispatch({ type: SIGNED_USER, payload: user });
         } catch(err) {
-            const message = err.response.data.message;
-            const msg = !!message ? message.message : err;
-            dispatch({ type: SIGN_USER_FAILED, payload: msg })
+            dispatch({ type: SIGN_USER_FAILED, payload: err.message })
         }
     } else {
         dispatch({ type: UNSIGNED_USER })

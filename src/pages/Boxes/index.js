@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useFetch } from '../../hooks/useFetch';
 import { Link } from 'react-router-dom';
-import api from '../../services/api';
-import { BoxesLoadContainer } from './List/styles';
 import List from './List/index';
 import logo from '../../assets/logo.svg';
 import load from '../../assets/loading.svg';
@@ -9,32 +8,12 @@ import {
     BoxesGeneralContainer,
     BoxesHeaderContainer,
     BoxesNewBoxContainer,
-    BoxesErrorContainer,
+    BoxesInfoContainer,
+    BoxesLoadContainer
 } from './styles';
 
-const Boxes = props => {
-    const [ boxes, setBoxes ] = useState([]);
-    const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState(false);
-
-    useEffect(() => {
-        fetch();
-    }, [])
-
-    const fetch = async() => {
-        setLoading(true);
-        try {
-            const token = localStorage.getItem('mybox_token');
-            const response = await api.get('/restrito/boxes', {
-                headers: { 'x-access-token': token }
-            });
-            setLoading(false);
-            setBoxes(response.data);
-        } catch(err) {
-            setLoading(false);
-            setError(true)
-        }
-    }
+const Boxes = props => {    
+    const { fetching, error, message, data } = useFetch('/restrito/boxes');    
 
     return (
         <BoxesGeneralContainer>
@@ -45,28 +24,24 @@ const Boxes = props => {
             <BoxesNewBoxContainer>
                 <Link to="/"><strong>Criar novo box >></strong></Link>
             </BoxesNewBoxContainer>
-
-            { loading &&   
+            { fetching &&   
                 <BoxesLoadContainer>
                     <img src={load} alt=""/>
                 </BoxesLoadContainer>  
             }
-            { boxes.length > 0 &&
-                <List boxes={boxes}/>
+            { data && !fetching &&
+                <List boxes={data}/>
             } 
-
-            { boxes.length === 0 && !loading &&
-                <BoxesErrorContainer>
+            { error &&
+                <BoxesInfoContainer>
+                    <p><strong>{message}</strong></p> 
+                </BoxesInfoContainer>
+            }
+            { !data && !fetching &&
+                <BoxesInfoContainer>
                     <p><strong>Nenhum box encontrado!</strong></p> 
-                </BoxesErrorContainer>
+                </BoxesInfoContainer>
             } 
-
-            { error && 
-                <BoxesErrorContainer> 
-                    <p><strong>Atualize a página para buscar os boxes.</strong></p> 
-                </BoxesErrorContainer>
-            }            
-
         </BoxesGeneralContainer>
     )
 }

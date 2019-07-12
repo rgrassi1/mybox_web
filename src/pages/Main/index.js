@@ -1,6 +1,5 @@
-import React, { useState, useContext, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import UserContext from '../../context';
 import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 import {
@@ -9,9 +8,6 @@ import {
 } from './styles';
 
 const Main = props => {
-
-    const { state } = useContext(UserContext);
-
     const [box, setBox] = useState({ title: '', email: '' })
     const [created, setCreated] = useState(false);
 
@@ -22,13 +18,9 @@ const Main = props => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const response = await api.post('/boxes', box);
+        const response = await api.post('/restrito/boxes', box);
         setBox({ ...box, id: response.data._id });
         setCreated(true);
-    }
-
-    if (!state.isAuth) {
-        return <Redirect to="/signin"/>
     }
 
     return (

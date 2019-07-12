@@ -16,7 +16,8 @@ export const BoxHeaderContainer = styled.header`
     align-items: center;
     h1 {
         font: inherit;
-        color: #FFF;
+        color: #444;
+        font-weight: 400;
         font-size: 21px;
         padding-left: 15px;
         margin-left: 15px;

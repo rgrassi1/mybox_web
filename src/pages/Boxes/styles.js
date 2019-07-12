@@ -28,20 +28,14 @@ export const BoxesNewBoxContainer = styled.div`
     a { text-decoration: none } 
     strong { color: #7159c1; }
 `
-export const BoxesContainer = styled.ul`
-    li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #444;
-        a { color: inherit; }
-    }
-    & + li { margin-top: 15px; }    
-`
-export const BoxesErrorContainer = styled.div`
+export const BoxesInfoContainer = styled.div`
     padding: 10px;
-    margin-top: 10px;
+    margin-top: 120px;
     background: #7159c1;
     border-radius: 4px;
     p { color: #fff }
+`
+export const BoxesLoadContainer = styled.div`
+    margin: 20px;
+    text-align: center;
 `

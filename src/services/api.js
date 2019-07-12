@@ -1,8 +1,32 @@
 import axios from 'axios';
 
-const api = axios.create({
-    baseURL: process.env.API_URL || 'http://localhost:3333',
-    //headers: { 'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjZjExMTg5Yzk5MzU5M2I3NDQ1NDJlOSIsImVtYWlsIjoicmdyYXNzaTFAZ21haWwuY29tIiwiaWF0IjoxNTU5NzY3MjIzLCJleHAiOjE1NTk4NTM2MjN9.T1t6lM8r1PPxzj_aDmNz5R3yOHnBgyiv8RcgB4StrZA' }
-})
+export default class Api {
 
-export default api;
+    static axiosInstance = null;
+
+    static init() {
+        this.axiosInstance = axios.create({
+            baseURL: process.env.API_URL || 'http://localhost:3333'
+        })
+        this.addInterceptors();
+    } 
+
+    static addInterceptors() {
+        this.axiosInstance.interceptors.request.use(request => {
+            request.headers['x-access-token'] = localStorage.getItem('mybox_token');
+            return request;
+        })
+    }
+
+    static get(url, config = {}) {
+        return this.axiosInstance.get(url, config);
+    }
+
+    static post(url, data, config = {}) {
+        return this.axiosInstance.post(url, data, config);
+    }
+
+    static delete(url, data, config = {}) {
+        return this.axiosInstance.delete(url, data, config);
+    }
+}

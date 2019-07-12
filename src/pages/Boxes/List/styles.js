@@ -4,6 +4,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
 `
 export const Content = styled.div`
     width: 100%;
@@ -18,12 +19,8 @@ export const BoxesContainer = styled.ul`
         justify-content: space-between;
         align-items: center;
         color: #444;
-        a { color: inherit; }
+        a { color: inherit; font-weight: 500 }
     }
 
     & + li { margin-top: 15px; }    
-`
-export const BoxesLoadContainer = styled.div`
-    margin: 20px;
-    text-align: center;
 `
