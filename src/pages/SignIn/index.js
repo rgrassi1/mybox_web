@@ -14,7 +14,7 @@ const SignIn = props => {
     const { state, dispatch } = useContext(UserContext);
 
     if (state.isAuth) {
-        const { from } = props.location.state || { from: { pathname: '/' } };
+        const { from } = props.location.state || { from: { pathname: '/' } };        
         return <Redirect to={from} />
     }
 

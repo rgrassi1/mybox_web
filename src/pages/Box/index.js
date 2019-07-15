@@ -22,7 +22,8 @@ class Box extends Component {
         this.state = { 
             box: { files: [] },
             loading: false,
-            error: false
+            error: false,
+            message: null
         }
     }
 
@@ -54,7 +55,7 @@ class Box extends Component {
             });
     
         } catch(err) {
-            this.setState({ loading: false, error: true })
+            this.setState({ loading: false, error: true, message: err.message })
         }
     }
 
@@ -115,7 +116,7 @@ class Box extends Component {
     }
         
     render() {
-        const { box, loading, error } = this.state
+        const { box, loading, error, message } = this.state
         return (
             <BoxContainer>
                 <BoxHeaderContainer>
@@ -135,7 +136,7 @@ class Box extends Component {
                         <BoxFilesContent>                             
                             <Upload handleUpload={this.handleUpload}/>
                             { error &&
-                                <h3 style={{ textAlign: 'center', padding: 10 }}>Box não encontrado!</h3>
+                                <h3 style={{ textAlign: 'center', padding: 10 }}>{message}</h3>
                             }
                             { !error &&
                                 <FileList files={this.state.box.files} handleRemove={this.handleRemove}/>
