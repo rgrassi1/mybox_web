@@ -4,14 +4,14 @@ import { Redirect } from 'react-router-dom';
 import { checkAuth } from '../actions';
 import UserContext from '../context';
 
-const Component = (Component, props) => {
-
-    const { state, dispatch } = useContext(UserContext);
+export default function (Component, props) {
+    
+    const { state, dispatch } = useContext(UserContext);    
     
     useEffect(() => {
         checkAuth(dispatch)
-    }, [])    
-
+    }, [])
+    
     return (
         state.isAuth 
             ? <Component {...props}/> 
@@ -21,5 +21,3 @@ const Component = (Component, props) => {
             }}/>        
     )
 }
-
-export default Component;
